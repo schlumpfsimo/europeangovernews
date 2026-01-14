@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>European Governews</title>
+  <style>
+    :root{
+      --carp-blue:#003399;
+      --star:#ffcc00;
+      --ink:#111;
+      --page-w: 980px;
+
+      /* map colours */
+      --sea1:#cfe3ff;
+      --sea2:#9fc2ff;
+      --land1:#2f6d32;
+      --land2:#3f8f45;
+      --ice:#eef6ff;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:#fff;
+      color:var(--ink);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      cursor: pointer;
+    }
+
+    .page{
+      width:min(var(--page-w), 100%);
+      margin:0 auto;
+      padding:26px 22px 44px 22px;
+      position:relative;
+    }
+
+    .preamble{
+      margin:0 0 14px 0;
+      line-height:1.38;
+      font-size:20px;
+      letter-spacing:.1px;
+      max-width: 920px;
+    }
+    .preamble strong{ font-weight:800; }
+
+    .banner{
+      margin:10px 0 18px 0;
+      background:var(--carp-blue);
+      color:#fff;
+      text-align:center;
+      padding:14px 10px;
+      font-size:26px;
+      font-weight:700;
+      letter-spacing:.4px;
+      user-select:none;
+    }
+
+    /* Star circle: bigger stars, tighter like the PDF emblem */
+    .eu-circle{
+      position:absolute;
+      right: 12px;
+      top: 18px;
+      width: 210px;
+      height: 210px;
+      pointer-events:none;
+      transform-origin: 50% 50%;
+      filter: drop-shadow(0 1px 0 rgba(0,0,0,.10));
+    }
+    .spin-once{ animation: spin 900ms ease-in-out 1; }
+    @keyframes spin{ from{ transform: rotate(0deg);} to{ transform: rotate(360deg);} }
+
+    .masthead{
+      margin: 6px 0 10px 0;
+      color:var(--carp-blue);
+      font-family: Georgia, "Times New Roman", Times, serif;
+      font-size:92px;
+      line-height:1.02;
+      font-weight:700;
+      letter-spacing:-.6px;
+    }
+
+    /* Map below title */
+    .map-wrap{
+      display:flex;
+      justify-content:center;
+      margin: 10px 0 10px 0;
+    }
+    .map-frame{
+      width: min(700px, 96vw);
+      border: 2px solid rgba(0,0,0,.10);
+      border-radius: 16px;
+      overflow:hidden;
+      background: linear-gradient(135deg, rgba(0,0,0,.02), rgba(0,0,0,.00));
+    }
+    canvas{
+      display:block;
+      width:100%;
+      height:auto;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+    .pixel-caption{
+      text-align:center;
+      margin-top:10px;
+      font-size:13px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(0,0,0,.55);
+      user-select:none;
+    }
+
+    /* Contact details further down */
+    .imprint{
+      margin: 110px 0 0 0;
+      font-size:18px;
+      line-height:1.35;
+      color:#111;
+      max-width: 940px;
+      cursor: text;
+    }
+
+    @media (max-width: 680px){
+      .preamble{ font-size:16px; }
+      .banner{ font-size:18px; padding:10px 8px; }
+      .masthead{ font-size:54px; }
+      .imprint{ font-size:14px; margin-top: 70px; }
+      .eu-circle{ right: 6px; top: 12px; width: 160px; height: 160px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page" id="page">
+
+    <!-- EU stars in a circle (larger stars, upright, close to emblem look) -->
+    <svg class="eu-circle" id="euCircle" viewBox="0 0 200 200" aria-hidden="true">
+      <defs>
+        <!-- Larger, “chunkier” upright star -->
+        <polygon id="euStar"
+          points="0,-16 4.6,-4.9 16,-4.9 6.6,1.7 10.1,14.1 0,7.4 -10.1,14.1 -6.6,1.7 -16,-4.9 -4.6,-4.9"
+          fill="var(--star)"/>
+      </defs>
+
+      <!-- 12 stars around circle; keep upright via counter-rotation -->
+      <g transform="translate(100 100)">
+        <!-- radius tuned to mimic EU emblem spacing -->
+        <g transform="rotate(0) translate(0 -72) rotate(0)"><use href="#euStar"/></g>
+        <g transform="rotate(30) translate(0 -72) rotate(-30)"><use href="#euStar"/></g>
+        <g transform="rotate(60) translate(0 -72) rotate(-60)"><use href="#euStar"/></g>
+        <g transform="rotate(90) translate(0 -72) rotate(-90)"><use href="#euStar"/></g>
+        <g transform="rotate(120) translate(0 -72) rotate(-120)"><use href="#euStar"/></g>
+        <g transform="rotate(150) translate(0 -72) rotate(-150)"><use href="#euStar"/></g>
+        <g transform="rotate(180) translate(0 -72) rotate(-180)"><use href="#euStar"/></g>
+        <g transform="rotate(210) translate(0 -72) rotate(-210)"><use href="#euStar"/></g>
+        <g transform="rotate(240) translate(0 -72) rotate(-240)"><use href="#euStar"/></g>
+        <g transform="rotate(270) translate(0 -72) rotate(-270)"><use href="#euStar"/></g>
+        <g transform="rotate(300) translate(0 -72) rotate(-300)"><use href="#euStar"/></g>
+        <g transform="rotate(330) translate(0 -72) rotate(-330)"><use href="#euStar"/></g>
+      </g>
+    </svg>
+
+    <p class="preamble">
+      <strong>RESOLVED</strong> to uphold the bonds of friendship that overcome all frontiers,<br>
+      <strong>DETERMINED</strong> to preserve the ties forged through tears, laughter, and Grolsch,<br>
+      <strong>IN VIEW</strong> of further steps to be taken in order to advance Friendship integration,<br>
+      <strong>HAVE DECIDED</strong> to establish European Governews and to this end are publishing a common paper.
+    </p>
+
+    <div class="banner">in distantia concordia</div>
+
+    <h1 class="masthead">European Governews</h1>
+
+    <!-- Pixel map rendered via canvas (more Europe-like silhouette, coloured) -->
+    <div class="map-wrap" aria-label="Pixelated map of Europe">
+      <div>
+        <div class="map-frame">
+          <!-- low-res internal canvas; CSS scales it up crisply -->
+          <canvas id="euMap" width="140" height="84" aria-label="Pixelated Europe map"></canvas>
+        </div>
+        <div class="pixel-caption">Europe</div>
+      </div>
+    </div>
+
+    <p class="imprint">
+      European Governews is produced and distributed by the Everything and Nothing Istitute Publishing Division
+      everythingnothingistitute@gmail.com
+    </p>
+
+  </div>
+
+  <script>
+    // Rotate star circle once on click (anywhere on page)
+    const page = document.getElementById('page');
+    const euCircle = document.getElementById('euCircle');
+
+    page.addEventListener('click', () => {
+      euCircle.classList.remove('spin-once');
+      void euCircle.offsetWidth; // restart animation
+      euCircle.classList.add('spin-once');
+    }, { passive: true });
+
+    // ---- Pixel Europe map (canvas) ----
+    const c = document.getElementById('euMap');
+    const ctx = c.getContext('2d', { alpha: false });
+
+    const W = c.width, H = c.height;
+
+    const css = getComputedStyle(document.documentElement);
+    const SEA1 = css.getPropertyValue('--sea1').trim();
+    const SEA2 = css.getPropertyValue('--sea2').trim();
+    const LAND1 = css.getPropertyValue('--land1').trim();
+    const LAND2 = css.getPropertyValue('--land2').trim();
+    const ICE  = css.getPropertyValue('--ice').trim();
+
+    // simple hash noise (deterministic) for subtle land variation
+    function h2(x,y){
+      let n = x*374761393 + y*668265263; // large primes
+      n = (n ^ (n >> 13)) * 1274126177;
+      return ((n ^ (n >> 16)) >>> 0) / 4294967295;
+    }
+
+    function lerp(a,b,t){ return a + (b-a)*t; }
+
+    // Parse hex to rgb
+    function hexToRgb(hex){
+      const s = hex.replace('#','').trim();
+      const v = s.length===3 ? s.split('').map(ch=>ch+ch).join('') : s;
+      const n = parseInt(v,16);
+      return { r:(n>>16)&255, g:(n>>8)&255, b:n&255 };
+    }
+    const sea1 = hexToRgb(SEA1), sea2 = hexToRgb(SEA2);
+    const land1 = hexToRgb(LAND1), land2 = hexToRgb(LAND2);
+    const ice = hexToRgb(ICE);
+
+    // Point-in-polygon
+    function inPoly(px, py, poly){
+      let inside = false;
+      for(let i=0, j=poly.length-1; i<poly.length; j=i++){
+        const xi=poly[i][0], yi=poly[i][1];
+        const xj=poly[j][0], yj=poly[j][1];
+        const intersect = ((yi>py)!==(yj>py)) && (px < (xj-xi)*(py-yi)/(yj-yi+1e-9) + xi);
+        if(intersect) inside = !inside;
+      }
+      return inside;
+    }
+
+    // Polygons in grid coordinates (stylised but recognisable Europe)
+    // Coordinate system: 0..W, 0..H (top-left origin)
+    const polys = {
+      iberia: [[26,58],[18,64],[20,72],[30,76],[40,72],[38,62],[33,58]],
+      france: [[38,48],[34,56],[40,62],[50,60],[54,52],[48,46]],
+      uk:     [[20,38],[16,44],[18,52],[26,52],[28,44],[24,38]],
+      ireland:[[14,46],[12,50],[14,54],[18,52],[16,46]],
+      benelux:[[50,44],[48,48],[50,52],[54,50],[54,46]],
+      germany:[[54,46],[52,54],[58,58],[66,56],[66,48],[60,44]],
+      scandi: [[62,12],[56,22],[58,34],[70,40],[80,30],[76,14]],
+      italy:  [[58,60],[56,64],[60,68],[66,72],[72,80],[78,78],[72,70],[66,62]],
+      balkans:[[70,60],[66,64],[72,68],[80,70],[86,66],[84,58],[76,56]],
+      east:   [[66,44],[66,58],[76,62],[90,60],[104,52],[104,40],[88,36],[74,38]],
+      turkey: [[88,70],[82,74],[86,78],[102,78],[110,74],[104,70]]
+    };
+
+    // Rasterise
+    const img = ctx.createImageData(W, H);
+    for(let y=0; y<H; y++){
+      const t = y/(H-1);
+      // sea gradient
+      const rS = Math.round(lerp(sea1.r, sea2.r, t));
+      const gS = Math.round(lerp(sea1.g, sea2.g, t));
+      const bS = Math.round(lerp(sea1.b, sea2.b, t));
+
+      for(let x=0; x<W; x++){
+        const idx = (y*W + x)*4;
+
+        // base sea
+        let r=rS, g=gS, b=bS;
+
+        // ice cap hint (north atlantic / arctic)
+        if(y < 10 && x > 48 && x < 96 && h2(x,y) > 0.45){
+          r = Math.round(lerp(r, ice.r, 0.70));
+          g = Math.round(lerp(g, ice.g, 0.70));
+          b = Math.round(lerp(b, ice.b, 0.70));
+        }
+
+        // land test (union of polygons)
+        const px = x + 0.5, py = y + 0.5;
+        let land = false;
+        for(const k in polys){
+          if(inPoly(px, py, polys[k])) { land = true; break; }
+        }
+
+        if(land){
+          // subtle land variation + “coast” darkening
+          const n = h2(x,y);
+          const coast = (
+            (x>0 && !isLand(x-1,y)) ||
+            (x<W-1 && !isLand(x+1,y)) ||
+            (y>0 && !isLand(x,y-1)) ||
+            (y<H-1 && !isLand(x,y+1))
+          ) ? 0.18 : 0.0;
+
+          const mix = 0.25 + 0.55*n;
+          r = Math.round(lerp(land1.r, land2.r, mix) * (1 - coast));
+          g = Math.round(lerp(land1.g, land2.g, mix) * (1 - coast));
+          b = Math.round(lerp(land1.b, land2.b, mix) * (1 - coast));
+        }
+
+        img.data[idx+0]=r;
+        img.data[idx+1]=g;
+        img.data[idx+2]=b;
+        img.data[idx+3]=255;
+      }
+    }
+
+    ctx.putImageData(img, 0, 0);
+
+    // Helper: land check for coast detection (fast enough at this size)
+    function isLand(x,y){
+      const px = x + 0.5, py = y + 0.5;
+      for(const k in polys){
+        if(inPoly(px, py, polys[k])) return true;
+      }
+      return false;
+    }
+  </script>
+</body>
+</html>
