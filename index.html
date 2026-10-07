@@ -44,6 +44,7 @@
       font-size:20px;
       letter-spacing:.1px;
       max-width: 920px;
+      padding-right: 210px; /* room for the star circle */
     }
     .preamble strong{ font-weight:800; }
 
@@ -89,8 +90,12 @@
       justify-content:center;
       margin: 10px 0 10px 0;
     }
+    .map-wrap > div{
+      width: 100%;
+      max-width: 700px;
+    }
     .map-frame{
-      width: min(700px, 96vw);
+      width: 100%;
       border: 2px solid rgba(0,0,0,.10);
       border-radius: 16px;
       overflow:hidden;
@@ -114,6 +119,15 @@
       user-select:none;
     }
 
+    /* Calendar embed */
+    .calendar{
+      display:block;
+      width:100%;
+      height:600px;
+      margin-top:40px;
+      border:0;
+    }
+
     /* Contact details further down */
     .imprint{
       margin: 110px 0 0 0;
@@ -125,11 +139,12 @@
     }
 
     @media (max-width: 680px){
-      .preamble{ font-size:16px; }
+      .preamble{ font-size:16px; padding-right:0; }
       .banner{ font-size:18px; padding:10px 8px; }
       .masthead{ font-size:54px; }
       .imprint{ font-size:14px; margin-top: 70px; }
-      .eu-circle{ right: 6px; top: 12px; width: 160px; height: 160px; }
+      .eu-circle{ position:static; display:block; margin:0 auto 10px auto; width: 140px; height: 140px; }
+      .calendar{ height:450px; }
     }
   </style>
 </head>
@@ -176,7 +191,7 @@
     <h1 class="masthead">European Governews</h1>
 
     <!-- Pixel map rendered via canvas (EU members in blue, hover for country names) -->
-    <div class="map-wrap" aria-label="Pixelated map of Europe">
+    <div class="map-wrap">
       <div>
         <div class="map-frame">
           <!-- low-res internal canvas; CSS scales it up crisply -->
@@ -191,9 +206,10 @@
       everythingnothingistitute [at] gmail.com
     </p>
 
-  </div>
+    <iframe class="calendar" title="European Governews calendar" loading="lazy"
+      src="https://calendar.google.com/calendar/embed?src=everythingnothingistitute%40gmail.com&ctz=Europe%2FBerlin"></iframe>
 
-  <iframe src="https://calendar.google.com/calendar/embed?src=everythingnothingistitute%40gmail.com&ctz=Europe%2FBerlin" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+  </div>
 
   <script>
     // Rotate star circle once on click (anywhere on page)
@@ -374,7 +390,7 @@
           } else {
             rgb = tone[id];
             // darker pixel on borders and coasts
-            if(cellAt(x+1, y) !== id || cellAt(x, y+1) !== id) rgb = mix(rgb, [0,0,0], 0.22);
+            if((x+1 < W && cellAt(x+1, y) !== id) || (y+1 < H && cellAt(x, y+1) !== id)) rgb = mix(rgb, [0,0,0], 0.22);
             if(id === highlight) rgb = mix(rgb, STAR, 0.75);
           }
           img.data[i] = rgb[0]; img.data[i+1] = rgb[1]; img.data[i+2] = rgb[2]; img.data[i+3] = 255;
