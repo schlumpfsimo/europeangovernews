@@ -15,10 +15,10 @@
       /* map colours */
       --sea1:#cfe3ff;
       --sea2:#9fc2ff;
-      --land1:#5f8a4e;
-      --land2:#87ab6c;
-      --eu1:#1f4fb8;
-      --eu2:#4a78d6;
+      --europe1:#1f4fb8;
+      --europe2:#4a78d6;
+      --other1:#a9adb3;
+      --other2:#c3c6cb;
     }
 
     *{ box-sizing:border-box; }
@@ -202,7 +202,7 @@
 
     <h1 class="masthead">European Governews</h1>
 
-    <!-- Pixel map rendered via canvas (EU members in blue, hover for country names) -->
+    <!-- Pixel map rendered via canvas (Europe in blue, rest grey; hover turns a country gold) -->
     <div class="map-wrap">
       <div>
         <div class="map-frame">
@@ -239,7 +239,7 @@
     // ---- Pixel Europe map (canvas) ----
     // One character per pixel: "." = sea, any other char = index into MAP_NAMES
     // (A-Z = 0-25, a-z = 26-51). Rasterised from Natural Earth country shapes.
-    const MAP_NAMES = ["Greenland","Russia","Norway","Finland","Iceland","Sweden","United Kingdom","Estonia","Latvia","Denmark","Belarus","Ireland","Lithuania","Germany","Poland","Ukraine","Netherlands","France","Belgium","Czechia","Luxembourg","Slovakia","Romania","Moldova","Austria","Hungary","Switzerland","Georgia","Italy","Slovenia","Croatia","Serbia","Spain","Turkey","Bosnia and Herz.","Bulgaria","Portugal","Montenegro","Kosovo","Albania","Macedonia","Greece","Syria","N. Cyprus","Morocco","Cyprus","Lebanon","Algeria","Tunisia","Israel","Jordan","Palestine"];
+    const MAP_NAMES = ["Greenland","Russia","Norway","Finland","Iceland","Sweden","United Kingdom","Estonia","Latvia","Denmark","Belarus","Ireland","Lithuania","Germany","Poland","Ukraine","Netherlands","France","Belgium","Czechia","Luxembourg","Slovakia","Romania","Moldova","Austria","Hungary","Switzerland","Georgia","Italy","Slovenia","Croatia","Serbia","Spain","Turkey (Asia)","Bosnia and Herzegovina","Bulgaria","Portugal","Montenegro","Kosovo","Turkey","Albania","North Macedonia","Greece","Syria","Cyprus","Morocco","Lebanon","Algeria","Tunisia","Israel","Jordan","Palestine"];
     const MAP_ROWS = [
       "AAA..............................................................................................B..BBBBBBBBBBBBBBBBBBBB",
       "AA..................................................................................................BBBBBBBBBBBBBBBBBBBB",
@@ -307,10 +307,10 @@
       "...............................RRRRRRRRRRRRRRRRRRRRRRNNNNNNNNNNTTTTTTTTTVVVVVVVPPPPPPPPWXXXXPPPPPPPPPPPPP....BBBBBBBBBBB",
       ".................................RRRRRRRRRRRRRRRRRRRRRNNNNNNNNNNTTYYTTVVVVVVVZVPPPPPPPWWWXXXPPPPPPPPPPPP.....BBBBBBBBBBB",
       "..................................RRRRRRRRRRRRRRRRRRRNNNNNNNNNNNYYYYYYVVVVVVZZZZZWWWWWWWWWXXXPPPPPPPPPPP.....BBBBBBBBBBB",
-      "...................................RRRRRRRRRRRRRRRRRRNNNNNNNNNNYYYYYYYVVVZZZZZZZWWWWWWWWWWWXXXPP..PP.BBB..B.BBBBBBBBBBBB",
-      "...................................RRRRRRRRRRRRRRRRRRNNNNNNNNNNYYYYYYYZZZZZZZZZWWWWWWWWWWWWXXPPP....BBBBBB.....BBBBBBBBB",
-      "....................................RRRRRRRRRRRRRRRRaaaaaYYYYYYYYYYYYZZZZZZZZZZWWWWWWWWWWWWXXPP.....BBBBB.........Bbbbbb",
-      "....................................RRRRRRRRRRRRRRRaaaaaaYYYYYYYYYYYYZZZZZZZZZWWWWWWWWWWWWWXPP........BB..............bb",
+      "...................................RRRRRRRRRRRRRRRRRRNNNNNNNNNNYYYYYYYVVVZZZZZZZWWWWWWWWWWWXXXPP..PP.PPP..P.BBBBBBBBBBBB",
+      "...................................RRRRRRRRRRRRRRRRRRNNNNNNNNNNYYYYYYYZZZZZZZZZWWWWWWWWWWWWXXPPP....PPPPPP.....BBBBBBBBB",
+      "....................................RRRRRRRRRRRRRRRRaaaaaYYYYYYYYYYYYZZZZZZZZZZWWWWWWWWWWWWXXPP.....PPPPP.........Bbbbbb",
+      "....................................RRRRRRRRRRRRRRRaaaaaaYYYYYYYYYYYYZZZZZZZZZWWWWWWWWWWWWWXPP........PP..............bb",
       "....................................RRRRRRRRRRRRRRaaaaaaaaccccYYYYYddZZZZZZZZZWWWWWWWWWWWWWWPWW........................b",
       "....................................RRRRRRRRRRRRRRRaaacaccccccccddddeeeZZZZffWWWWWWWWWWWWWWWWWW.........................",
       "....................................RRRRRRRRRRRRRRRRccccccccccccddddeeeeZeffffWWWWWWWWWWWWWWWW..........................",
@@ -321,38 +321,34 @@
       "...................kggggggggggggggRRRRRRRRRRRRRRRRRRcc...ccccc.....eeeiiiiiiffffffjjjjjjjjjjj..........hhhhhhhhhhhhhhhhh",
       "...................kkkkgggggggggggggRRRRRRRRR.RRRRRR......cccccc.....eeiiiiffffffffjjjjjjjjjj.........hhhhhhhhhhhhhhhhhh",
       "...................kkkkkgggggggggggggggRRRR.....RR........ccccccc......eiilllfmmffjjjjjjjjjjj........hhhhhhhhhhhhhhhhhhh",
-      "..................kkkkkggggggggggggggggggRR...............ccccccc.......eilllmmmmfjjjjjjjjjhhh......hhhhhhhhhhhhhhhhhhhh",
-      "..................kkkkggggggggggggggggggggg............R...cccccc.........llnnmmooojjjjjjjphhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
-      ".................kkkkkggggggggggggggggggggg...........RR....cccccc..........nnnooooojjpjjpphhh...hhhhhhhhhhhhhhhhhhhhhhh",
-      "................kkkkkgggggggggggggggggggg.............RR.....cccccccc.......nnoooooppppppphhh...hhhhhhhhhhhhhhhhhhhhhhhh",
-      "................kkkkgggggggggggggggggg........................cccccccc......nnnooopppp.....hhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
-      "................kkkkggggggggggggggggg..................c.........ccccccc....nnnnpppppp.....hhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
-      "................kkkkgggggggggggggggg.................ccc..........cccccccc..nnnpppp........hhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
-      "................kkkkggggggggggggggg...................cc...........cccc..cc..nnppppp.......phhhhhhhhhhhhhhhhhhhhhhhhhhqq",
-      "................kkkkggggggggggggggg......gg...........cc.............cc.......npppppp......p.hhhhhhhhhhhhhhhhhhhhhhqqqqq",
-      "...............kkkkgggggggggggggggg..................ccc.............cc........pppppp........hhhhhhhhhhhhhhhhhhhh.hqqqqq",
-      "................kkggggggggggggggggg..................ccc..............cc........ppppppp.....hhhhhhhhhhhhhhhhhh....hqqqqq",
-      "....................gggggggggggggg....................................c..........pppppp.......hhhhhhhhhhhhhhhh....qqqqqq",
-      "....................ggggggggggggg....................................cc...........ppppp........hhhhhhh....hhh......qqqqq",
-      "....................ggggggggggg.....................................cc...........ppppp..........hhhhhh.............qqqqq",
-      ".....................g.......g................................cccccc..............ppp...............h........rr....qqqqq",
-      ".....................s.........................................ccccc..............pppp..........p...........tt.....uuqqq",
-      "....................ss...............v..vvvvv...v.....www........ccc.......................................tt......uuqqq",
-      "...................ssss...........vvvvvvvvvvvvvvvvvvvwwwwww........c...............................................uuqqq",
-      "...................ssssssss....vvvvvvvvvvvvvvvvvvvvvvwwwww.........................................................uxqqq",
-      "..................sssssssssssvvvvvvvvvvvvvvvvvvvvvvvvwwwww..............................ppppp......................xxqqq",
-      "..............sssssssssssssssvvvvvvvvvvvvvvvvvvvvvvvvwwwww.........................................................xxyyy",
-      "............sssssssssssssssssvvvvvvvvvvvvvvvvvvvvvvvvwwwwww........................................................zzyyy",
-      "...........ssssssssssssssssssvvvvvvvvvvvvvvvvvvvvvvvvwwwwww........................................................xzyyy",
-      "..........sssssssssssssssssssvvvvvvvvvvvvvvvvvvvvvvvwwwwww.........................................................xzyyy"
+      "..................kkkkkggggggggggggggggggRR...............ccccccc.......eilllmmmmfjjjjjjjjjnnn......hhhhhhhhhhhhhhhhhhhh",
+      "..................kkkkggggggggggggggggggggg............R...cccccc.........lloommpppjjjjjjjqnnnnnhhhhhhhhhhhhhhhhhhhhhhhh",
+      ".................kkkkkggggggggggggggggggggg...........RR....cccccc..........ooopppppjjqjjqqnnn...hhhhhhhhhhhhhhhhhhhhhhh",
+      "................kkkkkgggggggggggggggggggg.............RR.....cccccccc.......oopppppqqqqqqqnnn...hhhhhhhhhhhhhhhhhhhhhhhh",
+      "................kkkkgggggggggggggggggg........................cccccccc......ooopppqqqq.....nhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+      "................kkkkggggggggggggggggg..................c.........ccccccc....ooooqqqqqq.....hhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+      "................kkkkgggggggggggggggg.................ccc..........cccccccc..oooqqqq........hhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+      "................kkkkggggggggggggggg...................cc...........cccc..cc..ooqqqqq.......qhhhhhhhhhhhhhhhhhhhhhhhhhhrr",
+      "................kkkkggggggggggggggg......gg...........cc.............cc.......oqqqqqq......q.hhhhhhhhhhhhhhhhhhhhhhrrrrr",
+      "...............kkkkgggggggggggggggg..................ccc.............cc........qqqqqq........hhhhhhhhhhhhhhhhhhhh.hrrrrr",
+      "................kkggggggggggggggggg..................ccc..............cc........qqqqqqq.....hhhhhhhhhhhhhhhhhh....hrrrrr",
+      "....................gggggggggggggg....................................c..........qqqqqq.......hhhhhhhhhhhhhhhh....rrrrrr",
+      "....................ggggggggggggg....................................cc...........qqqqq........hhhhhhh....hhh......rrrrr",
+      "....................ggggggggggg.....................................cc...........qqqqq..........hhhhhh.............rrrrr",
+      ".....................g.......g................................cccccc..............qqq...............h........ss....rrrrr",
+      ".....................t.........................................ccccc..............qqqq..........q...........ss.....uurrr",
+      "....................tt...............v..vvvvv...v.....www........ccc.......................................ss......uurrr",
+      "...................tttt...........vvvvvvvvvvvvvvvvvvvwwwwww........c...............................................uurrr",
+      "...................tttttttt....vvvvvvvvvvvvvvvvvvvvvvwwwww.........................................................uxrrr",
+      "..................tttttttttttvvvvvvvvvvvvvvvvvvvvvvvvwwwww..............................qqqqq......................xxrrr",
+      "..............tttttttttttttttvvvvvvvvvvvvvvvvvvvvvvvvwwwww.........................................................xxyyy",
+      "............tttttttttttttttttvvvvvvvvvvvvvvvvvvvvvvvvwwwwww........................................................zzyyy",
+      "...........ttttttttttttttttttvvvvvvvvvvvvvvvvvvvvvvvvwwwwww........................................................xzyyy",
+      "..........tttttttttttttttttttvvvvvvvvvvvvvvvvvvvvvvvwwwwww.........................................................xzyyy"
     ];
 
-    const EU = new Set([
-      "Austria","Belgium","Bulgaria","Croatia","Cyprus","Czechia","Denmark","Estonia",
-      "Finland","France","Germany","Greece","Hungary","Ireland","Italy","Latvia",
-      "Lithuania","Luxembourg","Malta","Netherlands","Poland","Portugal","Romania",
-      "Slovakia","Slovenia","Spain","Sweden"
-    ]);
+    // Countries on the European continent (drawn blue; everything else grey)
+    const EUROPE = new Set(["Russia","Norway","Finland","Iceland","Sweden","United Kingdom","Estonia","Latvia","Denmark","Belarus","Ireland","Lithuania","Germany","Poland","Ukraine","Netherlands","France","Belgium","Czechia","Luxembourg","Slovakia","Romania","Moldova","Austria","Hungary","Switzerland","Italy","Slovenia","Croatia","Serbia","Spain","Bosnia and Herzegovina","Bulgaria","Portugal","Montenegro","Kosovo","Turkey","Albania","North Macedonia","Greece","Cyprus"]);
 
     const c = document.getElementById('euMap');
     const ctx = c.getContext('2d', { alpha: false });
@@ -373,8 +369,8 @@
     const css = getComputedStyle(document.documentElement);
     const col = k => hexToRgb(css.getPropertyValue(k));
     const SEA1 = col('--sea1'), SEA2 = col('--sea2');
-    const EU1 = col('--eu1'), EU2 = col('--eu2');
-    const LAND1 = col('--land1'), LAND2 = col('--land2');
+    const EUR1 = col('--europe1'), EUR2 = col('--europe2');
+    const OTHER1 = col('--other1'), OTHER2 = col('--other2');
     const STAR = col('--star');
 
     // deterministic hash noise
@@ -388,7 +384,7 @@
     // each country gets its own tone so neighbours stay distinguishable
     const tone = MAP_NAMES.map((name, i) => {
       const t = h2(i*7+3, i*13+1);
-      return EU.has(name) ? mix(EU1, EU2, t) : mix(LAND1, LAND2, t);
+      return EUROPE.has(name) ? mix(EUR1, EUR2, t) : mix(OTHER1, OTHER2, t);
     });
 
     function draw(highlight){
@@ -402,10 +398,9 @@
           if(id < 0){
             rgb = h2(x, y) > 0.93 ? mix(sea, [255,255,255], 0.35) : sea;   // little waves
           } else {
-            rgb = tone[id];
+            rgb = id === highlight ? mix(STAR, tone[id], 0.12) : tone[id];   // hovered country turns gold
             // darker pixel on borders and coasts
             if((x+1 < W && cellAt(x+1, y) !== id) || (y+1 < H && cellAt(x, y+1) !== id)) rgb = mix(rgb, [0,0,0], 0.22);
-            if(id === highlight) rgb = mix(rgb, STAR, 0.75);
           }
           img.data[i] = rgb[0]; img.data[i+1] = rgb[1]; img.data[i+2] = rgb[2]; img.data[i+3] = 255;
         }
@@ -414,14 +409,15 @@
     }
     draw(-1);
 
-    // hover / tap shows the country name in the caption
+    // hover / tap on a European country turns it gold and shows its name
     const caption = document.getElementById('mapCaption');
     let current = -1;
     function pick(ev){
       const r = c.getBoundingClientRect();
       const x = Math.floor((ev.clientX - r.left) / r.width * W);
       const y = Math.floor((ev.clientY - r.top) / r.height * H);
-      const id = cellAt(x, y);
+      let id = cellAt(x, y);
+      if(id >= 0 && !EUROPE.has(MAP_NAMES[id])) id = -1;
       if(id === current) return;
       current = id;
       draw(id);
