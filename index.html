@@ -71,8 +71,7 @@
       transform-origin: 50% 50%;
       filter: drop-shadow(0 1px 0 rgba(0,0,0,.10));
     }
-    .spin-once{ animation: spin 900ms ease-in-out 1; }
-    @keyframes spin{ from{ transform: rotate(0deg);} to{ transform: rotate(360deg);} }
+    .eu-circle{ transition: transform 900ms ease-in-out; }
 
     .masthead{
       margin: 6px 0 10px 0;
@@ -119,18 +118,29 @@
       user-select:none;
     }
 
-    /* Calendar embed */
+    /* Agenda (calendar embed) */
+    .agenda{ margin-top:56px; }
+    .section-title{
+      margin:0 0 14px 0;
+      padding-bottom:8px;
+      border-bottom:3px solid var(--carp-blue);
+      color:var(--carp-blue);
+      font-family: Georgia, "Times New Roman", Times, serif;
+      font-size:40px;
+      line-height:1.1;
+    }
     .calendar{
       display:block;
       width:100%;
       height:600px;
-      margin-top:40px;
-      border:0;
+      border:1px solid rgba(0,0,0,.10);
+      border-radius:8px;
+      cursor:auto;
     }
 
     /* Contact details further down */
     .imprint{
-      margin: 110px 0 0 0;
+      margin: 70px 0 0 0;
       font-size:18px;
       line-height:1.35;
       color:#111;
@@ -142,7 +152,9 @@
       .preamble{ font-size:16px; padding-right:0; }
       .banner{ font-size:18px; padding:10px 8px; }
       .masthead{ font-size:54px; }
-      .imprint{ font-size:14px; margin-top: 70px; }
+      .imprint{ font-size:14px; margin-top: 48px; }
+      .agenda{ margin-top:40px; }
+      .section-title{ font-size:30px; }
       .eu-circle{ position:static; display:block; margin:0 auto 10px auto; width: 140px; height: 140px; }
       .calendar{ height:450px; }
     }
@@ -201,25 +213,27 @@
       </div>
     </div>
 
+    <section class="agenda">
+      <h2 class="section-title">Agenda</h2>
+      <iframe class="calendar" title="European Governews agenda" loading="lazy"
+        src="https://calendar.google.com/calendar/embed?src=everythingnothingistitute%40gmail.com&ctz=Europe%2FBerlin"></iframe>
+    </section>
+
     <p class="imprint">
       European Governews is produced and distributed by the Everything and Nothing Istitute Publishing Division
       everythingnothingistitute [at] gmail.com
     </p>
 
-    <iframe class="calendar" title="European Governews calendar" loading="lazy"
-      src="https://calendar.google.com/calendar/embed?src=everythingnothingistitute%40gmail.com&ctz=Europe%2FBerlin"></iframe>
-
   </div>
 
   <script>
-    // Rotate star circle once on click (anywhere on page)
-    const page = document.getElementById('page');
+    // Rotate star circle one more full turn on every click (anywhere on page)
     const euCircle = document.getElementById('euCircle');
+    let turns = 0;
 
-    page.addEventListener('click', () => {
-      euCircle.classList.remove('spin-once');
-      void euCircle.offsetWidth; // restart animation
-      euCircle.classList.add('spin-once');
+    document.addEventListener('click', () => {
+      turns++;
+      euCircle.style.transform = `rotate(${turns * 360}deg)`;
     }, { passive: true });
 
     // ---- Pixel Europe map (canvas) ----
